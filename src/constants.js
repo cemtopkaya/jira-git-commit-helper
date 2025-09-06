@@ -17,7 +17,7 @@ const CONSTANTS = {
         '📒 Documentation',
         '🔂 Revert'
     ],
-    url: (baseURL) => `${baseURL.replace(/\/$/, '')}/rest/api/latest/search/?jql=updated >= -20d AND assignee in (currentUser()) order by updated DESC&maxResults=15`,
+    url: (baseURL) => `${baseURL.replace(/\/$/, '')}/rest/api/3/search/jql`,
     strings: {
         usernamePlaceholder: 'Enter your JIRA email (eg: your-name@your-company.com)',
         tokenPlaceholder: 'Enter your JIRA API token',
