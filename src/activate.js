@@ -80,11 +80,20 @@ async function activate(context) {
 
                 if (cachedIssues) return cachedIssues;
                 // get list of tickets assigned to current user from JIRA using axios
-                const { data: { issues } } = await axios.get(CONSTANTS.url(baseUrl), {
-                    headers: {
-                        Authorization: `Basic ${secrets}`,
+                const { data: { issues } } = await axios.post(CONSTANTS.url(baseUrl),
+                    {
+                        jql: "updated >= -20d AND assignee in (currentUser()) order by updated DESC",
+                        maxResults: 15,
+                        fields: ["key", "summary", "updated"]
+                    },
+                    {
+                        headers: {
+                            Authorization: `Basic ${secrets}`,
+                            Accept: "application/json",
+                            "Content-Type": "application/json"
+                        }
                     }
-                });
+                );
 
                 return issues.map(issue => ({
                     label: `${issue.fields.summary}`,
